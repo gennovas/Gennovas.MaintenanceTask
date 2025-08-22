@@ -101,7 +101,7 @@ EXEC catalog.create_environment_reference
     @project_name     = N'Gennovas.MaintenanceTask',
     @reference_type   = N'R',  -- R = Required, A = Optional
     @folder_name      = @FolderName;
-
+```
 ---
 ## 5. Mapping environment variable to project variable
 ---
@@ -137,3 +137,4 @@ EXEC msdb.dbo.sp_add_jobschedule
     @freq_type=4,
     @freq_interval=1,
     @active_start_time=100;
+```
