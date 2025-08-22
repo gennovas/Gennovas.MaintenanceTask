@@ -54,12 +54,12 @@ DECLARE
 
 -- Declare Environment Variables
 DECLARE 
-    @ApplicationName NVARCHAR(512)   = N'TTC - Maintenance Task',
-    @BackupAppDbName NVARCHAR(512)   = N'TTC_LIVE_App',
-    @BackupFormDbName NVARCHAR(512)  = N'TTC_LIVE_Forms',
-    @BackupObjectDbName NVARCHAR(512)= N'TTC_LIVE_Objects',
-    @BackupSSRSDbName NVARCHAR(512)  = N'ReportServer',
-    @DataSource NVARCHAR(512)        = N'TTC-SQLDB',
+    @ApplicationName NVARCHAR(512)   = N'{Application Name}',
+    @BackupAppDbName NVARCHAR(512)   = N'{SyteLine App Db Name}',
+    @BackupFormDbName NVARCHAR(512)  = N'{SyteLine Forms Db Name}',
+    @BackupObjectDbName NVARCHAR(512)= N'{SyteLine Objects Db Name}',
+    @BackupSSRSDbName NVARCHAR(512)  = N'{Report Server Db Name}',
+    @DataSource NVARCHAR(512)        = N'{MS SQL Server Name}',
     @DaysToKeep INT                  = 3,
     @InitialCatalog NVARCHAR(512)    = N'master',
     @MinMemoryPct FLOAT              = 0.25,
@@ -164,8 +164,8 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 END
 
 DECLARE @jobId BINARY(16),
-	@serverName NVARCHAR(255) = N'TTC-SQLDB',
-	@loginName NVARCHAR(255) = N'TTC-SQLDB\Administrator',
+	@serverName NVARCHAR(255) = N'{MS SQL Server Name}',
+	@loginName NVARCHAR(255) = N'{MS SQL Server Name\Administrator}',
 	@cmd NVARCHAR(3800) = N''
 
 EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'MaintenanceTasks - Every day', 
