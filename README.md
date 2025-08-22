@@ -148,30 +148,169 @@ After creating the environment and deploying your SSIS project, you need to map 
 Use SSMS or T-SQL to create a scheduled job for daily execution of maintenance packages:
 
 ```sql
-USE msdb;
+USE [msdb]
 GO
 
--- Create Job
-EXEC msdb.dbo.sp_add_job
-    @job_name=N'MaintenanceTasks - Every day',
-    @enabled=1,
-    @description=N'Daily maintenance tasks',
-    @owner_login_name=N'TTC-SQLDB\Administrator';
+/****** Object:  Job [MaintenanceTasks - Every day]    Script Date: 22/08/2025 7:32:16 AM ******/
+BEGIN TRANSACTION
+DECLARE @ReturnCode INT
+SELECT @ReturnCode = 0
+/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 22/08/2025 7:32:16 AM ******/
+IF NOT EXISTS (SELECT name FROM msdb.dbo.syscategories WHERE name=N'[Uncategorized (Local)]' AND category_class=1)
+BEGIN
+EXEC @ReturnCode = msdb.dbo.sp_add_category @class=N'JOB', @type=N'LOCAL', @name=N'[Uncategorized (Local)]'
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 
--- Add Job Steps (example: MT01, MT02, etc.)
-EXEC msdb.dbo.sp_add_jobstep
-    @job_name=N'MaintenanceTasks - Every day',
-    @step_name=N'Call MT01 - ShrinkDatabase',
-    @subsystem=N'SSIS',
-    @command=N'/ISSERVER "\SSISDB\Maintenance\Gennovas.MaintenanceTask\MT01 - ShrinkDatabase.dtsx" /SERVER "TTC-SQLDB" /ENVREFERENCE 1 /Par "$ServerOption::LOGGING_LEVEL(Int16)";1 /Par "$ServerOption::SYNCHRONIZED(Boolean)";True /CALLERINFO SQLAGENT /REPORTING E';
+END
 
--- Add additional steps as needed (MT02, MT06, MT07, MT08)
+DECLARE @jobId BINARY(16),
+	@serverName NVARCHAR(255) = N'TTC-SQLDB',
+	@loginName NVARCHAR(255) = N'TTC-SQLDB\Administrator',
+	@cmd NVARCHAR(3800) = N''
 
--- Schedule Job
-EXEC msdb.dbo.sp_add_jobschedule
-    @job_name=N'MaintenanceTasks - Every day',
-    @name=N'Maintenance - Daily Tasks',
-    @freq_type=4,
-    @freq_interval=1,
-    @active_start_time=100;
+EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'MaintenanceTasks - Every day', 
+		@enabled=1, 
+		@notify_level_eventlog=0, 
+		@notify_level_email=0, 
+		@notify_level_netsend=0, 
+		@notify_level_page=0, 
+		@delete_level=0, 
+		@description=N'No description available.', 
+		@category_name=N'[Uncategorized (Local)]', 
+		@owner_login_name=@loginName, @job_id = @jobId OUTPUT
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+/****** Object:  Step [Call MT01 - ShrinkDatabase]    Script Date: 22/08/2025 7:32:16 AM ******/
+SET @cmd = 
+    N'/ISSERVER "\"\SSISDB\Maintenance\Gennovas.MaintenanceTask\MT01 - ShrinkDatabase.dtsx\"" ' +
+    N'/SERVER "\"' + @serverName + N'\"" ' +
+    N'/ENVREFERENCE 1 ' +
+    N'/Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 ' +
+    N'/Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True ' +
+    N'/CALLERINFO SQLAGENT /REPORTING E';
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Call MT01 - ShrinkDatabase', 
+		@step_id=1, 
+		@cmdexec_success_code=0, 
+		@on_success_action=3, 
+		@on_success_step_id=0, 
+		@on_fail_action=3, 
+		@on_fail_step_id=0, 
+		@retry_attempts=0, 
+		@retry_interval=0, 
+		@os_run_priority=0, @subsystem=N'SSIS', 
+		@command=@cmd,
+		@database_name=N'master', 
+		@flags=0
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+/****** Object:  Step [Call MT02 - DatabaseFullBackup]    Script Date: 22/08/2025 7:32:17 AM ******/
+SET @cmd = 
+    N'/ISSERVER "\"\SSISDB\Maintenance\Gennovas.MaintenanceTask\MT02 - DatabaseFullBackup.dtsx\"" ' +
+    N'/SERVER "\"' + @serverName + N'\"" ' +
+    N'/ENVREFERENCE 1 ' +
+    N'/Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 ' +
+    N'/Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True ' +
+    N'/CALLERINFO SQLAGENT /REPORTING E';
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Call MT02 - DatabaseFullBackup', 
+		@step_id=2, 
+		@cmdexec_success_code=0, 
+		@on_success_action=3, 
+		@on_success_step_id=0, 
+		@on_fail_action=3, 
+		@on_fail_step_id=0, 
+		@retry_attempts=0, 
+		@retry_interval=0, 
+		@os_run_priority=0, @subsystem=N'SSIS', 
+		@command=@cmd, 
+		@database_name=N'master', 
+		@flags=0
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+/****** Object:  Step [Call MT06 - CleanupOldBackup]    Script Date: 22/08/2025 7:32:17 AM ******/
+SET @cmd = 
+    N'/ISSERVER "\"\SSISDB\Maintenance\Gennovas.MaintenanceTask\MT06 - CleanupOldBackup.dtsx\"" ' +
+    N'/SERVER "\"' + @serverName + N'\"" ' +
+    N'/ENVREFERENCE 1 ' +
+    N'/Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 ' +
+    N'/Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True ' +
+    N'/CALLERINFO SQLAGENT /REPORTING E';
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Call MT06 - CleanupOldBackup', 
+		@step_id=3, 
+		@cmdexec_success_code=0, 
+		@on_success_action=3, 
+		@on_success_step_id=0, 
+		@on_fail_action=3, 
+		@on_fail_step_id=0, 
+		@retry_attempts=0, 
+		@retry_interval=0, 
+		@os_run_priority=0, @subsystem=N'SSIS', 
+		@command=@cmd, 
+		@database_name=N'master', 
+		@flags=0
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+/****** Object:  Step [Call MT07 - CheckStorage]    Script Date: 22/08/2025 7:32:17 AM ******/
+SET @cmd = 
+    N'/ISSERVER "\"\SSISDB\Maintenance\Gennovas.MaintenanceTask\MT07 - CheckStorage.dtsx\"" ' +
+    N'/SERVER "\"' + @serverName + N'\"" ' +
+    N'/ENVREFERENCE 1 ' +
+    N'/Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 ' +
+    N'/Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True ' +
+    N'/CALLERINFO SQLAGENT /REPORTING E';
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Call MT07 - CheckStorage', 
+		@step_id=4, 
+		@cmdexec_success_code=0, 
+		@on_success_action=3, 
+		@on_success_step_id=0, 
+		@on_fail_action=3, 
+		@on_fail_step_id=0, 
+		@retry_attempts=0, 
+		@retry_interval=0, 
+		@os_run_priority=0, @subsystem=N'SSIS', 
+		@command=@cmd, 
+		@database_name=N'master', 
+		@flags=0
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+/****** Object:  Step [Call MT08 - ReleaseMemory]    Script Date: 22/08/2025 7:32:17 AM ******/
+SET @cmd = 
+    N'/ISSERVER "\"\SSISDB\Maintenance\Gennovas.MaintenanceTask\MT08 - ReleaseMemory.dtsx\"" ' +
+    N'/SERVER "\"' + @serverName + N'\"" ' +
+    N'/ENVREFERENCE 1 ' +
+    N'/Par "\"$ServerOption::LOGGING_LEVEL(Int16)\"";1 ' +
+    N'/Par "\"$ServerOption::SYNCHRONIZED(Boolean)\"";True ' +
+    N'/CALLERINFO SQLAGENT /REPORTING E';
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Call MT08 - ReleaseMemory', 
+		@step_id=5, 
+		@cmdexec_success_code=0, 
+		@on_success_action=1, 
+		@on_success_step_id=0, 
+		@on_fail_action=2, 
+		@on_fail_step_id=0, 
+		@retry_attempts=0, 
+		@retry_interval=0, 
+		@os_run_priority=0, @subsystem=N'SSIS', 
+		@command=@cmd, 
+		@database_name=N'master', 
+		@flags=0
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+EXEC @ReturnCode = msdb.dbo.sp_update_job @job_id = @jobId, @start_step_id = 1
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Maintenance - Daily Tasks', 
+		@enabled=1, 
+		@freq_type=4, 
+		@freq_interval=1, 
+		@freq_subday_type=1, 
+		@freq_subday_interval=0, 
+		@freq_relative_interval=0, 
+		@freq_recurrence_factor=0, 
+		@active_start_date=20250820, 
+		@active_end_date=99991231, 
+		@active_start_time=100, 
+		@active_end_time=235959, 
+		@schedule_uid=N'fa302dbe-42d8-4c24-988f-6acf67edc492'
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+EXEC @ReturnCode = msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+COMMIT TRANSACTION
+GOTO EndSave
+QuitWithRollback:
+    IF (@@TRANCOUNT > 0) ROLLBACK TRANSACTION
+EndSave:
+GO
 ```
