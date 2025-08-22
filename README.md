@@ -103,7 +103,44 @@ EXEC catalog.create_environment_reference
     @folder_name      = @FolderName;
 ```
 ---
-## 5. Mapping environment variable to project variable
+
+## 5. Map Environment Variables to Project Parameters
+
+After creating the environment and deploying your SSIS project, you need to map environment variables to the project parameters. This ensures that the packages use the correct values at runtime.
+
+### Steps
+
+1. **Open SQL Server Management Studio (SSMS)**  
+   Connect to the SQL Server instance where `SSISDB` is deployed.
+
+2. **Navigate to the Project**  
+   - Expand: `Integration Services Catalogs → SSISDB → [Your Folder] → Projects`  
+   - Right-click the project (e.g., `Gennovas.MaintenanceTask`) and select **Configure**.
+
+3. **Add Environment Reference**  
+   - In the **Configure Project** window, go to the **References** page.  
+   - Click **Add** to reference the environment (e.g., `PRD`) that you created.  
+   - Choose the reference type:  
+     - **Required (`R`)**: The project must use this environment.  
+     - **Optional (`A`)**: The project can run without this environment.
+
+4. **Map Project Parameters to Environment Variables**  
+   - Go to the **Parameters** tab.  
+   - For each project parameter that should be set from an environment variable:  
+     - Click the **Value** column → **Use environment variable**.  
+     - Select the corresponding environment variable (e.g., map `BackupAppDbName` parameter to `BackupAppDbName` environment variable).  
+   - Repeat for all parameters that need dynamic values from the environment.
+
+5. **Save Configuration**  
+   - Click **OK** to save the environment reference and parameter mappings.  
+   - The project is now configured to automatically use values from the environment during execution.
+
+## Notes
+
+- Environment variables allow you to maintain different configurations for **development, test, and production** environments without modifying the project itself.  
+- Parameter mapping ensures consistency and reduces the risk of errors due to hard-coded values.  
+- After mapping, any SQL Agent job or manual execution of the SSIS package will automatically pick up the environment values.
+
 ---
 
 ## 6. Create SQL Agent Job
