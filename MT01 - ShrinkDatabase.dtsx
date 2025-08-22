@@ -1,0 +1,724 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/19/2025 9:52:47 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-06GRA2V"
+  DTS:CreatorName="DESKTOP-06GRA2V\Sarit Tunthong"
+  DTS:DTSID="{C0F567D5-E8B1-44F2-8400-409097CA07F8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="MT01 - ShrinkDatabase"
+  DTS:PackageType="5"
+  DTS:VersionBuild="103"
+  DTS:VersionGUID="{4C01746F-3B6B-4958-91A6-47CA090E58F7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E7A3BAB2-91ED-4230-A5BB-991799A3A736}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DatabaseId">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EF828346-1DE4-413D-BB37-AEDCEC8F61E3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DatabaseName">
+      <DTS:VariableValue
+        DTS:DataType="8">TTC_LIVE_App</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{492AFD01-EC9B-44AE-9518-3C003224ECC1}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DatabaseRecoveryModel">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{036621D3-B629-4B7B-8092-11C3DEBDA526}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DatabaseResultSet">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{060120F6-91ED-453B-B04A-705142E7DDAD}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DatabaseState">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1FC2C7E9-F8CA-4CF2-9DB3-49832019BCAE}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileType">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2F3B8A77-0BCC-4CB4-9855-D761FD145DF0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Growth">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{05960328-2972-40A1-936E-C07DE1546C41}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="IsError">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FDAF4021-AC43-4136-9AAD-ED9C7B0F19E9}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="LogicalName">
+      <DTS:VariableValue
+        DTS:DataType="8">TTC_CRP_App_log</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{02B69C7B-CF99-471A-8826-E871F891915E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MaxSize">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B8C12F7F-87B3-46F4-9461-E88E3F14EC10}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PhysicalPath">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DADF35AC-29B5-4B7B-B312-B3C86074E71F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="SizeMB">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A3B54F95-3F2A-44AF-B5EE-4E557433899F}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;USE &quot;+ @[User::DatabaseName] +&quot;;&#xA;SELECT TOP (1)&#xA;    name AS LogicalName&#xA;FROM sys.database_files&#xA;WHERE type_desc = 'LOG'&#xA;ORDER BY size DESC;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCmdGetLogicalFileName">
+      <DTS:VariableValue
+        DTS:DataType="8">USE TTC_LIVE_App;
+SELECT TOP (1)
+    name AS LogicalName
+FROM sys.database_files
+WHERE type_desc = 'LOG'
+ORDER BY size DESC;</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F871C3D6-9441-4BB6-AB58-073CDDA892F9}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;ALTER DATABASE &quot;+ @[User::DatabaseName] +&quot; SET RECOVERY FULL;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCmdSetFull">
+      <DTS:VariableValue
+        DTS:DataType="8">ALTER DATABASE TTC_LIVE_App SET RECOVERY FULL;</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{05614A1D-65F3-4381-97A1-6FD61588A8A7}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;ALTER DATABASE &quot;+ @[User::DatabaseName] +&quot; SET RECOVERY SIMPLE;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCmdSetSimple">
+      <DTS:VariableValue
+        DTS:DataType="8">ALTER DATABASE TTC_LIVE_App SET RECOVERY SIMPLE;</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E5358E50-2FAB-4F70-910F-872A4802D447}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;USE &quot;+ @[User::DatabaseName] +&quot;;&#xA;DBCC SHRINKFILE (&quot;+ @[User::LogicalName] +&quot;, 1024); &#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCmdShrinkLog">
+      <DTS:VariableValue
+        DTS:DataType="8">USE TTC_LIVE_App;
+DBCC SHRINKFILE (TTC_CRP_App_log, 1024); 
+</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Create Loging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D654A444-2B01-4886-9D1C-DEAC1B4F71C2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Create Loging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+          SQLTask:SqlStatementSource="INSERT INTO dbo.MaintenancePackageResult (PackageName) VALUES (?);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Get Database List"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C3783325-200D-44B1-A421-0FA63E83A349}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Get Database List"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+          SQLTask:SqlStatementSource="SELECT name, database_id, state_desc, recovery_model_desc&#xA;FROM sys.databases&#xA;WHERE database_id &gt; 4 /*exclude system databases*/&#xA;&#x9;and state_desc = 'ONLINE'&#xA;&#x9;and recovery_model_desc = 'FULL'&#xA;ORDER BY name;"
+          SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::DatabaseResultSet" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Init Loging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{989E9F3B-7BA0-4DCD-8BBD-DD29CDBA2EE9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Init Loging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+          SQLTask:SqlStatementSource="IF OBJECT_ID('dbo.MaintenancePackageResult') IS NULL&#xA;CREATE TABLE dbo.MaintenancePackageResult&#xA;(&#xA;    PackageName NVARCHAR(255) NOT NULL,&#xA;    ExecutionResult INT NOT NULL DEFAULT 0&#xA;);&#xA;&#xA;DELETE dbo.MaintenancePackageResult WHERE PackageName = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Loop Container - Shrink Database Log File"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{E4C56434-D367-4DB8-A255-ABBF392B0B6F}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Loop Container - Shrink Database Log File">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachADOEnumerator"
+        DTS:DTSID="{4C8C042E-380F-4B09-8FC2-B0462C0CEB46}"
+        DTS:ObjectName="{4C8C042E-380F-4B09-8FC2-B0462C0CEB46}">
+        <DTS:ObjectData>
+          <FEEADO
+            EnumType="EnumerateRowsInFirstTable"
+            VarName="User::DatabaseResultSet" />
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - Get Log File Logical Name"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{B82C336A-1BA3-4781-A2CD-4D3CF6AB3D5D}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Get Log File Logical Name"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQLCmdGetLogicalFileName"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="LogicalName"
+                SQLTask:DtsVariableName="User::LogicalName" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - SET RECOVERY MODE TO FULL"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{930c6c6c-fa72-48e5-8cc8-bf9e542ac7d7}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - SET RECOVERY MODE TO FULL"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQLCmdSetFull" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::DatabaseName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - SET RECOVERY MODE TO SIMPLE"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{19C87C84-6190-4374-9B1A-395CB7CCF537}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - SET RECOVERY MODE TO SIMPLE"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQLCmdSetSimple" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::DatabaseName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - Shrink Log File"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{920F3338-182E-4041-BFB9-0242D945E0AB}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Shrink Log File"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQLCmdShrinkLog" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Foreach Loop Container - Shrink Database Log File.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{83EF7372-A98A-4B33-A15D-920A03F3067B}"
+          DTS:From="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - SET RECOVERY MODE TO SIMPLE"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - Get Log File Logical Name" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Foreach Loop Container - Shrink Database Log File.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{8F22FA2F-D0E4-45AB-8AB1-5E51C90A5091}"
+          DTS:From="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - Get Log File Logical Name"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - Shrink Log File" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Foreach Loop Container - Shrink Database Log File.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{8058A8D5-9D8D-4378-AF15-63241BEFB78F}"
+          DTS:From="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - Shrink Log File"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - SET RECOVERY MODE TO FULL" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{F2AE49D0-AF86-4288-9BC4-8C3BF48822DC}"
+          DTS:ObjectName="{F2AE49D0-AF86-4288-9BC4-8C3BF48822DC}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::DatabaseName" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{DCFE4060-AB76-4D4C-B91A-12A8474E3CEC}"
+          DTS:ObjectName="{DCFE4060-AB76-4D4C-B91A-12A8474E3CEC}"
+          DTS:ValueIndex="1"
+          DTS:VariableName="User::DatabaseId" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{5112A74E-CEF2-4E9C-A554-CED77AFBDE7C}"
+          DTS:ObjectName="{5112A74E-CEF2-4E9C-A554-CED77AFBDE7C}"
+          DTS:ValueIndex="2"
+          DTS:VariableName="User::DatabaseState" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{8F183C68-8EC5-4393-A909-7340A3982A48}"
+          DTS:ObjectName="{8F183C68-8EC5-4393-A909-7340A3982A48}"
+          DTS:ValueIndex="3"
+          DTS:VariableName="User::DatabaseRecoveryModel" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{804ABD42-7C5D-4B44-A2EF-87964B1A9FB4}"
+      DTS:From="Package\Execute SQL Task - Get Database List"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Foreach Loop Container - Shrink Database Log File" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{DB183C8A-88D8-41B9-9D59-EC5125D49F0C}"
+      DTS:From="Package\Execute SQL Task - Create Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Execute SQL Task - Get Database List" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{BE659218-71C2-40A0-9CF7-4BF2A36602C0}"
+      DTS:From="Package\Execute SQL Task - Init Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Execute SQL Task - Create Loging" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{44C9F104-A630-491E-8A3F-2CEC86BE316D}"
+      DTS:EventID="542366328"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{1FB083AD-E643-4714-90FC-82A7FDF9C983}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Execute SQL Task - Update Task Result"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{B3E9D007-E233-4AE9-8C7D-254EB27C78FF}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Update Task Result"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+              SQLTask:SqlStatementSource="UPDATE dbo.MaintenancePackageResult SET ExecutionResult = 1 WHERE PackageName = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib">
+        <NodeLayout
+          Size="256,41.6"
+          Id="Package\Execute SQL Task - Get Database List"
+          TopLeft="3.57142857903159,198.188235153356" />
+        <NodeLayout
+          Size="296,41.6"
+          Id="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - Get Log File Logical Name"
+          TopLeft="29.0142861947722,71.8470586231113" />
+        <NodeLayout
+          Size="322.4,41.6"
+          Id="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - SET RECOVERY MODE TO FULL"
+          TopLeft="23.3000004683223,212.552940852718" />
+        <NodeLayout
+          Size="334.4,41.6"
+          Id="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - SET RECOVERY MODE TO SIMPLE"
+          TopLeft="5.14285709420028,3.02352927167308" />
+        <NodeLayout
+          Size="242.4,41.6"
+          Id="Package\Foreach Loop Container - Shrink Database Log File\Execute SQL Task - Shrink Log File"
+          TopLeft="62.9285721021649,141.317646871142" />
+        <EdgeLayout
+          Id="Package\Foreach Loop Container - Shrink Database Log File.PrecedenceConstraints[Constraint]"
+          TopLeft="174.678571644486,44.6235292716731">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.2235293514382"
+              Start="0,0"
+              End="0,19.7235293514382">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.7235293514382" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach Loop Container - Shrink Database Log File.PrecedenceConstraints[Constraint 1]"
+          TopLeft="180.571429148469,113.447058623111">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.8705882480302"
+              Start="0,0"
+              End="0,20.3705882480302">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.3705882480302" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach Loop Container - Shrink Database Log File.PrecedenceConstraints[Constraint 2]"
+          TopLeft="184.314286285244,182.917646871142">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29.6352939815768"
+              Start="0,0"
+              End="0,22.1352939815768">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.1352939815768" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="351.2,260"
+          Size="351.2,303.2"
+          Id="Package\Foreach Loop Container - Shrink Database Log File"
+          TopLeft="295.6571429058,2.7294125724101" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="259.571428579032,218.988235153356">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="36.0857143267676,-64.6588225809456"
+              Start="0,0"
+              End="28.5857143267676,-64.6588225809456">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="14.0428571633838,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.0428571633838,0"
+                    Point2="18.0428571633838,0"
+                    Point3="18.0428571633838,-4" />
+                  <mssgle:LineSegment
+                    End="18.0428571633838,-60.6588225809456" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18.0428571633838,-60.6588225809456"
+                    Point2="18.0428571633838,-64.6588225809456"
+                    Point3="22.0428571633838,-64.6588225809456" />
+                  <mssgle:LineSegment
+                    End="28.5857143267676,-64.6588225809456" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="128.414285423105,163.964705881683">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.223529271673"
+              Start="0,0"
+              End="0,26.723529271673">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.723529271673" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="238.4,41.6"
+          Id="Package\Execute SQL Task - Create Loging"
+          TopLeft="0.142857083556464,72.6470587598515" />
+        <NodeLayout
+          Size="224,41.6"
+          Id="Package\Execute SQL Task - Init Loging"
+          TopLeft="2.99999994678149,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="117.171428515169,47.1">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,25.5470587598515"
+              Start="0,0"
+              End="0,18.0470587598515">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.0470587598515" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <GroupLayout
+          Text="Loging"
+          ParentId="Package"
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="244,120"
+          Size="244,163.2"
+          Id="2c31a059-5f14-4303-8e3e-4dd6ba3dbc0d"
+          TopLeft="6.44285715806211,6.18823538125589">
+          <GroupLayout.ChildrenIds>
+            <s:String>Package\Execute SQL Task - Create Loging</s:String>
+            <s:String>Package\Execute SQL Task - Init Loging</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 2]</s:String>
+          </GroupLayout.ChildrenIds>
+        </GroupLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="264,41.6"
+          Id="Package.EventHandlers[OnError]\Execute SQL Task - Update Task Result"
+          TopLeft="235.476923329097,29.2307687951968" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

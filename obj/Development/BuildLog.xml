@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<BuildLog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ProjectInfo>
+    <Name>Gennovas.MaintenanceTask</Name>
+    <LastWriteTime>2025-08-22T00:00:44.6806582Z</LastWriteTime>
+    <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+  </ProjectInfo>
+  <LastBuildInfos>
+    <ProjectBuildItemInfo>
+      <Name>MT01 - ShrinkDatabase.dtsx</Name>
+      <LastWriteTime>2025-08-21T02:03:36.3104761Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>MT02 - DatabaseFullBackup.dtsx</Name>
+      <LastWriteTime>2025-08-21T01:55:04.2848295Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>MT03 - IndexMaintenance.dtsx</Name>
+      <LastWriteTime>2025-08-20T01:18:23.1191496Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>MT04 - StatisticsUpdate.dtsx</Name>
+      <LastWriteTime>2025-08-20T01:20:47.8316193Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>MT06 - CleanupOldBackup.dtsx</Name>
+      <LastWriteTime>2025-08-21T02:06:35.7535799Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>MT05 - IntegrityCheck.dtsx</Name>
+      <LastWriteTime>2025-08-20T02:08:42.1476583Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>MT07 - CheckStorage.dtsx</Name>
+      <LastWriteTime>2025-08-21T02:26:53.9473628Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>MT08 - ReleaseMemory.dtsx</Name>
+      <LastWriteTime>2025-08-21T02:29:29.5080822Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>MT09 - RestartSQLService.dtsx</Name>
+      <LastWriteTime>2025-08-20T07:08:42.704196Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>MT99 - ReportExecutions.dtsx</Name>
+      <LastWriteTime>2025-08-21T23:50:32.5863798Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+  </LastBuildInfos>
+</BuildLog>

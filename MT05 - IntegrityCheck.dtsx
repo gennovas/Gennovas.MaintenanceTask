@@ -1,0 +1,105 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/19/2025 10:14:14 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-06GRA2V"
+  DTS:CreatorName="DESKTOP-06GRA2V\Sarit Tunthong"
+  DTS:DTSID="{3E67FC88-8701-4BA4-89A4-B178374C5DBF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="MT05 - IntegrityCheck"
+  DTS:PackageType="5"
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{CF055693-B72B-4116-9694-4069E650C190}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9C1D8B07-D429-41B7-8CD8-974179E1A320}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;USE &quot; + @[$Project::BackupAppDbName]  +&quot;;&#xA;IF OBJECT_ID('dbo.MaintenanceDBCCResult') IS NULL&#xA;BEGIN&#xA;    CREATE TABLE dbo.MaintenanceDBCCResult&#xA;    (&#xA;        Error int,&#xA;        Level int,&#xA;        State int,&#xA;        MessageText nvarchar(4000),&#xA;        RepairLevel nvarchar(60),&#xA;        Status int,&#xA;        DbId int,&#xA;        DbFragId int,&#xA;        ObjectId int,&#xA;        IndexId int,&#xA;        PartitionId bigint,&#xA;        AllocUnitId bigint,&#xA;        File int,&#xA;        Page int,&#xA;        Slot int,&#xA;        RefFile int,&#xA;        RefPage int,&#xA;        RefSlot int&#xA;    );&#xA;END&#xA;&#xA;TRUNCATE TABLE dbo.MaintenanceDBCCResult;&#xA;&#xA;INSERT INTO dbo.MaintenanceDBCCResult&#xA;(&#xA;    Error, Level, State, MessageText, RepairLevel, Status, DbId, DbFragId,&#xA;    ObjectId, IndexId, PartitionId, AllocUnitId, File, Page, Slot,&#xA;    RefFile, RefPage, RefSlot&#xA;)&#xA;EXEC ('DBCC CHECKDB (''&quot;+ @[$Project::BackupAppDbName] +&quot;'') WITH PHYSICAL_ONLY, ALL_ERRORMSGS, TABLERESULTS');&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCmdIntegrityCheck">
+      <DTS:VariableValue
+        DTS:DataType="8">USE TTC_LIVE_App;
+IF OBJECT_ID('dbo.MaintenanceDBCCResult') IS NULL
+BEGIN
+    CREATE TABLE dbo.MaintenanceDBCCResult
+    (
+        Error int,
+        Level int,
+        State int,
+        MessageText nvarchar(4000),
+        RepairLevel nvarchar(60),
+        Status int,
+        DbId int,
+        DbFragId int,
+        ObjectId int,
+        IndexId int,
+        PartitionId bigint,
+        AllocUnitId bigint,
+        File int,
+        Page int,
+        Slot int,
+        RefFile int,
+        RefPage int,
+        RefSlot int
+    );
+END
+
+TRUNCATE TABLE dbo.MaintenanceDBCCResult;
+
+INSERT INTO dbo.MaintenanceDBCCResult
+(
+    Error, Level, State, MessageText, RepairLevel, Status, DbId, DbFragId,
+    ObjectId, IndexId, PartitionId, AllocUnitId, File, Page, Slot,
+    RefFile, RefPage, RefSlot
+)
+EXEC ('DBCC CHECKDB (''TTC_LIVE_App'') WITH PHYSICAL_ONLY, ALL_ERRORMSGS, TABLERESULTS');</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Integrity Check"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{080D6F42-E16B-41AA-AD5B-21823CF7AF61}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Integrity Check"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQLCmdIntegrityCheck" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="244.8,41.6"
+          Id="Package\Execute SQL Task - Integrity Check"
+          TopLeft="160.714286056404,53.5294117177853" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

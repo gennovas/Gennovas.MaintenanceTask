@@ -1,0 +1,862 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/19/2025 10:17:57 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-06GRA2V"
+  DTS:CreatorName="DESKTOP-06GRA2V\Sarit Tunthong"
+  DTS:DTSID="{C585A9A4-FF16-4443-8F5A-26D233C71DCF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="MT08 - ReleaseMemory"
+  DTS:PackageType="5"
+  DTS:VersionBuild="59"
+  DTS:VersionGUID="{37540398-AA44-458E-A7AC-66F5AD007F17}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DE4BF1C6-C466-4234-943E-5E1F5A4BA117}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MaxServerMemoryMB">
+      <DTS:VariableValue
+        DTS:DataType="5">4096.</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6F315657-A2B9-451A-AE33-3AD0001AD410}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MinServerMemoryMB">
+      <DTS:VariableValue
+        DTS:DataType="5">409.</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{85E7BCF4-36BA-4C2C-9ADE-219FFF86BEB8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ReleasedMemoryMB">
+      <DTS:VariableValue
+        DTS:DataType="5">0.</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B9080E5A-D380-4E10-BA57-8937A7D2A85F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="TotalPhysicalMB">
+      <DTS:VariableValue
+        DTS:DataType="5">4096.</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Create Loging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{f2cdda59-b4d8-483d-aef8-94c5e818f448}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Create Loging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+          SQLTask:SqlStatementSource="INSERT INTO dbo.MaintenancePackageResult (PackageName) VALUES (?);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - DBCC Clear Buffer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ABDC89EA-61AD-4028-8AD8-1F9A46FD80FD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - DBCC Clear Buffer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+          SQLTask:SqlStatementSource="DBCC FREEPROCCACHE;&#xA;CHECKPOINT;&#xA;DBCC DROPCLEANBUFFERS;&#xA;DBCC FREESYSTEMCACHE('ALL');" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Get Server Memory"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5D2865F8-7A33-49B2-8606-FAF0AB62A54E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Get Server Memory"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+          SQLTask:SqlStatementSource="SELECT &#xA;    CEILING (total_physical_memory_kb/1024.00) AS Total_Physical_MB&#xA;FROM sys.dm_os_sys_memory;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="Total_Physical_MB"
+            SQLTask:DtsVariableName="User::TotalPhysicalMB" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Init Loging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{bd53b1de-53e2-4f3f-b728-5b68ffe6d821}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Init Loging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+          SQLTask:SqlStatementSource="IF OBJECT_ID('dbo.MaintenancePackageResult') IS NULL&#xA;CREATE TABLE dbo.MaintenancePackageResult&#xA;(&#xA;    PackageName NVARCHAR(255) NOT NULL,&#xA;    ExecutionResult INT NOT NULL DEFAULT 0&#xA;);&#xA;&#xA;DELETE dbo.MaintenancePackageResult WHERE PackageName = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Release Server Memory"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{d3afb0dd-3f91-4418-83d5-e5f746b34e71}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Release Server Memory"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+          SQLTask:SqlStatementSource="EXEC sp_configure 'show advanced options', 1;&#xA;RECONFIGURE;&#xA;EXEC sp_configure 'max server memory', ?;&#xA;RECONFIGURE;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::ReleasedMemoryMB"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Set Max Min Server Memory Back"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{26bb8e4f-b44c-4ff8-84ba-2c581e520e27}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Set Max Min Server Memory Back"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+          SQLTask:SqlStatementSource="EXEC sp_configure 'show advanced options', 1;&#xA;RECONFIGURE;&#xA;EXEC sp_configure 'max server memory', ?;&#xA;RECONFIGURE;&#xA;EXEC sp_configure 'min server memory', ?;&#xA;RECONFIGURE;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::MaxServerMemoryMB"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::MinServerMemoryMB"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Set Min Max Server Memory"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7ABD2582-7A96-49F4-8009-5D6DC342EAC5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Set Min Max Server Memory"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+          SQLTask:SqlStatementSource="EXEC sp_configure 'show advanced options', 1;&#xA;RECONFIGURE;&#xA;EXEC sp_configure 'min server memory', 0;&#xA;RECONFIGURE;&#xA;EXEC sp_configure 'max server memory', ?;&#xA;RECONFIGURE;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::MaxServerMemoryMB"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Wait Release Process 10 Mins"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1C6FFB43-59E0-4804-947F-A110FB48BA63}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Wait Release Process 10 Mins"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+          SQLTask:SqlStatementSource="WAITFOR DELAY '00:10:00';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Expression Task - Cal Maximum Memory"
+      DTS:CreationName="Microsoft.ExpressionTask"
+      DTS:Description="Expression Task"
+      DTS:DTSID="{7093EA24-59AF-41CD-B45C-7316D382F6B2}"
+      DTS:ExecutableType="Microsoft.ExpressionTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Expression Task - Cal Maximum Memory"
+      DTS:TaskContact="Expression Task;Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExpressionTask
+          Expression="@[User::MaxServerMemoryMB] =  @[User::TotalPhysicalMB] &gt;= (16*1024) ?  @[User::TotalPhysicalMB] -  @[$Project::OSReservedMB] :  @[User::TotalPhysicalMB]" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Expression Task - Cal Minimum Memory"
+      DTS:CreationName="Microsoft.ExpressionTask"
+      DTS:Description="Expression Task"
+      DTS:DTSID="{FD6DE5A5-FEA6-49F2-A606-8042080F3EC6}"
+      DTS:ExecutableType="Microsoft.ExpressionTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Expression Task - Cal Minimum Memory"
+      DTS:TaskContact="Expression Task;Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExpressionTask
+          Expression="@[User::MinServerMemoryMB] =  @[User::MaxServerMemoryMB] *  @[$Project::MinMemoryPct]" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Expression Task - Cal Release Memory"
+      DTS:CreationName="Microsoft.ExpressionTask"
+      DTS:Description="Expression Task"
+      DTS:DTSID="{DA7AE98C-5FB0-4652-AE26-D3BA2DCFD87D}"
+      DTS:ExecutableType="Microsoft.ExpressionTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Expression Task - Cal Release Memory"
+      DTS:TaskContact="Expression Task;Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExpressionTask
+          Expression="@[User::ReleasedMemoryMB] =  @[User::MaxServerMemoryMB] *  @[$Project::ReleaseMemoryPct]" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{BE278B80-0AE3-4B91-ADA2-C8742876840F}"
+      DTS:From="Package\Execute SQL Task - Get Server Memory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Expression Task - Cal Maximum Memory" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{702BD06C-35BA-41DB-87C5-CC2F9F82FF37}"
+      DTS:From="Package\Expression Task - Cal Maximum Memory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Expression Task - Cal Minimum Memory" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{E4A77938-0729-46F7-B2D8-8C353AA6DE59}"
+      DTS:From="Package\Expression Task - Cal Minimum Memory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Expression Task - Cal Release Memory" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{08be74da-f276-4ff3-b46d-b89cdaa844ac}"
+      DTS:From="Package\Execute SQL Task - Init Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2 1"
+      DTS:To="Package\Execute SQL Task - Create Loging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{0A6F2FD9-CFFF-49DD-BC03-379B972C0A9C}"
+      DTS:From="Package\Expression Task - Cal Release Memory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Execute SQL Task - Set Min Max Server Memory" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{034C457C-87EB-41E0-B3FB-C2E5FC96D4DC}"
+      DTS:From="Package\Execute SQL Task - Set Min Max Server Memory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Execute SQL Task - DBCC Clear Buffer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{61868EF5-AD42-4701-AAE3-11DC4E8065A8}"
+      DTS:From="Package\Execute SQL Task - DBCC Clear Buffer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Execute SQL Task - Release Server Memory" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{F40EE72E-ECE7-43C3-9655-FD89B9FCF567}"
+      DTS:From="Package\Execute SQL Task - Release Server Memory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Execute SQL Task - Wait Release Process 10 Mins" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{52A2C4FB-2069-4E22-A87F-DD8CE39CD025}"
+      DTS:From="Package\Execute SQL Task - Wait Release Process 10 Mins"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\Execute SQL Task - Set Max Min Server Memory Back" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{2262FC51-A102-4B10-9969-7D838C78ADFC}"
+      DTS:From="Package\Execute SQL Task - Create Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\Execute SQL Task - Get Server Memory" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{4B3F40DB-4E99-4686-BD1C-02FE5B4B2F70}"
+      DTS:EventID="6422645"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{871B2463-5305-4B45-A524-7C324F178D7C}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Execute SQL Task - Update Task Result"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{5e06a2d5-8611-4f6c-8e9c-51de1c90cb5d}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Update Task Result"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+              SQLTask:SqlStatementSource="UPDATE dbo.MaintenancePackageResult SET ExecutionResult = 1 WHERE PackageName = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib">
+        <NodeLayout
+          Size="258.4,41.6"
+          Id="Package\Execute SQL Task - DBCC Clear Buffer"
+          TopLeft="202.985715550793,469.576470147182" />
+        <NodeLayout
+          Size="264,41.6"
+          Id="Package\Execute SQL Task - Get Server Memory"
+          TopLeft="47.2714295050321,136.92941161523" />
+        <NodeLayout
+          Size="284,41.6"
+          Id="Package\Execute SQL Task - Release Server Memory"
+          TopLeft="226.757144140467,536.105881853572" />
+        <NodeLayout
+          Size="330.4,41.6"
+          Id="Package\Execute SQL Task - Set Max Min Server Memory Back"
+          TopLeft="260.357144140468,673.152940636211" />
+        <NodeLayout
+          Size="305.6,42.4"
+          Id="Package\Execute SQL Task - Set Min Max Server Memory"
+          TopLeft="148.700001149519,403.047058440792" />
+        <NodeLayout
+          Size="312.8,41.6"
+          Id="Package\Execute SQL Task - Wait Release Process 10 Mins"
+          TopLeft="242.271429920136,603.588234754529" />
+        <NodeLayout
+          Size="268.8,41.6"
+          Id="Package\Expression Task - Cal Maximum Memory"
+          TopLeft="74.4142867056691,203.45882332162" />
+        <NodeLayout
+          Size="266.4,41.6"
+          Id="Package\Expression Task - Cal Minimum Memory"
+          TopLeft="107.271429632756,269.988235028011" />
+        <NodeLayout
+          Size="260,41.6"
+          Id="Package\Expression Task - Cal Release Memory"
+          TopLeft="140.128572559843,337.282352616084" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="179.271429505032,178.52941161523">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29.542857200637,24.9294117063902"
+              Start="0,0"
+              End="29.542857200637,17.4294117063902">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.46470585319511" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.46470585319511"
+                    Point2="0,12.4647058531951"
+                    Point3="4,12.4647058531951" />
+                  <mssgle:LineSegment
+                    End="25.542857200637,12.4647058531951" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25.542857200637,12.4647058531951"
+                    Point2="29.542857200637,12.4647058531951"
+                    Point3="29.542857200637,16.4647058531951" />
+                  <mssgle:LineSegment
+                    End="29.542857200637,17.4294117063902" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="208.814286705669,245.05882332162">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31.6571429270871,24.9294117063906"
+              Start="0,0"
+              End="31.6571429270871,17.4294117063906">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.4647058531953" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.4647058531953"
+                    Point2="0,12.4647058531953"
+                    Point3="4,12.4647058531953" />
+                  <mssgle:LineSegment
+                    End="27.6571429270871,12.4647058531953" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27.6571429270871,12.4647058531953"
+                    Point2="31.6571429270871,12.4647058531953"
+                    Point3="31.6571429270871,16.4647058531953" />
+                  <mssgle:LineSegment
+                    End="31.6571429270871,17.4294117063906" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="240.471429632756,311.588235028011">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29.6571429270868,25.6941175880727"
+              Start="0,0"
+              End="29.6571429270868,18.1941175880727">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.84705879403637" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.84705879403637"
+                    Point2="0,12.8470587940364"
+                    Point3="4,12.8470587940364" />
+                  <mssgle:LineSegment
+                    End="25.6571429270868,12.8470587940364" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25.6571429270868,12.8470587940364"
+                    Point2="29.6571429270868,12.8470587940364"
+                    Point3="29.6571429270868,16.8470587940364" />
+                  <mssgle:LineSegment
+                    End="29.6571429270868,18.1941175880727" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="270.128572559843,378.882352616084">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31.3714285896758,24.1647058247079"
+              Start="0,0"
+              End="31.3714285896758,16.6647058247079">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.08235291235394" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.08235291235394"
+                    Point2="0,12.0823529123539"
+                    Point3="4,12.0823529123539" />
+                  <mssgle:LineSegment
+                    End="27.3714285896758,12.0823529123539" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27.3714285896758,12.0823529123539"
+                    Point2="31.3714285896758,12.0823529123539"
+                    Point3="31.3714285896758,16.0823529123539" />
+                  <mssgle:LineSegment
+                    End="31.3714285896758,16.6647058247079" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="301.500001149519,445.447058440792">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="30.685714401274,24.1294117063903"
+              Start="0,0"
+              End="30.685714401274,16.6294117063903">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.06470585319516" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.06470585319516"
+                    Point2="0,12.0647058531952"
+                    Point3="4,12.0647058531952" />
+                  <mssgle:LineSegment
+                    End="26.685714401274,12.0647058531952" />
+                  <mssgle:CubicBezierSegment
+                    Point1="26.685714401274,12.0647058531952"
+                    Point2="30.685714401274,12.0647058531952"
+                    Point3="30.685714401274,16.0647058531952" />
+                  <mssgle:LineSegment
+                    End="30.685714401274,16.6294117063903" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="332.185715550793,511.176470147182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="36.5714285896744,24.9294117063894"
+              Start="0,0"
+              End="36.5714285896744,17.4294117063894">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.46470585319472" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.46470585319472"
+                    Point2="0,12.4647058531947"
+                    Point3="4,12.4647058531947" />
+                  <mssgle:LineSegment
+                    End="32.5714285896744,12.4647058531947" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32.5714285896744,12.4647058531947"
+                    Point2="36.5714285896744,12.4647058531947"
+                    Point3="36.5714285896744,16.4647058531947" />
+                  <mssgle:LineSegment
+                    End="36.5714285896744,17.4294117063894" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="368.757144140467,577.705881853572">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29.9142857796685,25.8823529009575"
+              Start="0,0"
+              End="29.9142857796685,18.3823529009575">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.94117645047874" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.94117645047874"
+                    Point2="0,12.9411764504787"
+                    Point3="4,12.9411764504787" />
+                  <mssgle:LineSegment
+                    End="25.9142857796685,12.9411764504787" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25.9142857796685,12.9411764504787"
+                    Point2="29.9142857796685,12.9411764504787"
+                    Point3="29.9142857796685,16.9411764504787" />
+                  <mssgle:LineSegment
+                    End="29.9142857796685,18.3823529009575" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="398.671429920136,645.188234754529">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="26.885714220332,27.964705881682"
+              Start="0,0"
+              End="26.885714220332,20.464705881682">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.982352940841" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.982352940841"
+                    Point2="0,13.982352940841"
+                    Point3="4,13.982352940841" />
+                  <mssgle:LineSegment
+                    End="22.885714220332,13.982352940841" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.885714220332,13.982352940841"
+                    Point2="26.885714220332,13.982352940841"
+                    Point3="26.885714220332,17.982352940841" />
+                  <mssgle:LineSegment
+                    End="26.885714220332,20.464705881682" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="146.128571474187,112.717646996486">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="33.1428580308448,24.2117646187439"
+              Start="0,0"
+              End="33.1428580308448,16.7117646187439">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.10588230937195" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.10588230937195"
+                    Point2="0,12.1058823093719"
+                    Point3="4,12.1058823093719" />
+                  <mssgle:LineSegment
+                    End="29.1428580308448,12.1058823093719" />
+                  <mssgle:CubicBezierSegment
+                    Point1="29.1428580308448,12.1058823093719"
+                    Point2="33.1428580308448,12.1058823093719"
+                    Point3="33.1428580308448,16.1058823093719" />
+                  <mssgle:LineSegment
+                    End="33.1428580308448,16.7117646187439" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="238.4,41.6"
+          Id="Package\Execute SQL Task - Create Loging"
+          TopLeft="26.9285714741873,71.1176469964864" />
+        <NodeLayout
+          Size="224,41.6"
+          Id="Package\Execute SQL Task - Init Loging"
+          TopLeft="5.5,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2 1]"
+          TopLeft="117.5,47.1">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="28.6285714741873,24.0176469964864"
+              Start="0,0"
+              End="28.6285714741873,16.5176469964864">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.00882349824318" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.00882349824318"
+                    Point2="0,12.0088234982432"
+                    Point3="4,12.0088234982432" />
+                  <mssgle:LineSegment
+                    End="24.6285714741873,12.0088234982432" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24.6285714741873,12.0088234982432"
+                    Point2="28.6285714741873,12.0088234982432"
+                    Point3="28.6285714741873,16.0088234982432" />
+                  <mssgle:LineSegment
+                    End="28.6285714741873,16.5176469964864" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <GroupLayout
+          Text="Release Memory"
+          ParentId="Package"
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="596,720"
+          Size="596,763.2"
+          Id="be2bc340-d5b2-4e8a-b62e-ad0c6544e0f3"
+          TopLeft="5.58571346462969,13.5529417529261">
+          <GroupLayout.ChildrenIds>
+            <s:String>Package\Execute SQL Task - DBCC Clear Buffer</s:String>
+            <s:String>Package\Execute SQL Task - Get Server Memory</s:String>
+            <s:String>Package\Execute SQL Task - Release Server Memory</s:String>
+            <s:String>Package\Execute SQL Task - Set Max Min Server Memory Back</s:String>
+            <s:String>Package\Execute SQL Task - Set Min Max Server Memory</s:String>
+            <s:String>Package\Execute SQL Task - Wait Release Process 10 Mins</s:String>
+            <s:String>Package\Expression Task - Cal Maximum Memory</s:String>
+            <s:String>Package\Expression Task - Cal Minimum Memory</s:String>
+            <s:String>Package\Expression Task - Cal Release Memory</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 1]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 2]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 3]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 4]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 5]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 6]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 7]</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 8]</s:String>
+            <s:String>Package\Execute SQL Task - Create Loging</s:String>
+            <s:String>Package\Execute SQL Task - Init Loging</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 2 1]</s:String>
+          </GroupLayout.ChildrenIds>
+        </GroupLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="264,41.6"
+          Id="Package.EventHandlers[OnError]\Execute SQL Task - Update Task Result"
+          TopLeft="7.49999988824132,7.33333322405817" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,840 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/19/2025 10:11:59 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-06GRA2V"
+  DTS:CreatorName="DESKTOP-06GRA2V\Sarit Tunthong"
+  DTS:DTSID="{525831A6-BDF3-46AF-A3A9-0B0971267C91}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="MT02 - DatabaseFullBackup"
+  DTS:PackageType="5"
+  DTS:VersionBuild="42"
+  DTS:VersionGUID="{F0D4B4AA-95F7-4AD9-8D99-25E0CD9C7BDB}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B64BDCD2-76B7-40A5-94BB-F81E05FC6CD2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="HaveAppDbName">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C4160458-C616-433D-8B11-DEEDED67105D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="HaveFormDbName">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5342715C-877A-4623-BB75-A9CD8846590E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="HaveObjectDbName">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FA3A04F2-8718-4C01-9F46-61379C1A07F3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="HaveSSRSDbName">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Create Loging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2b0dd3ba-c561-41bf-8e93-bafebff9b50d}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Create Loging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+          SQLTask:SqlStatementSource="INSERT INTO dbo.MaintenancePackageResult (PackageName) VALUES (?);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Init Loging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4ab85b24-2ad8-48d2-b0e3-95bc1fb8ba7b}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Init Loging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+          SQLTask:SqlStatementSource="IF OBJECT_ID('dbo.MaintenancePackageResult') IS NULL&#xA;CREATE TABLE dbo.MaintenancePackageResult&#xA;(&#xA;    PackageName NVARCHAR(255) NOT NULL,&#xA;    ExecutionResult INT NOT NULL DEFAULT 0&#xA;);&#xA;&#xA;DELETE dbo.MaintenancePackageResult WHERE PackageName = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container - Backup App Db"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{BF2B66D8-E037-4B1F-A3B2-CA3155F7DC85}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container - Backup App Db">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container - Backup App Db\Execute SQL Task - Check Existing App Db"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{A9D3E1F7-6784-4022-BD80-23A36B13A8E5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Check Existing App Db"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStatementSource="IF EXISTS (SELECT 1 FROM sys.databases WHERE name = ?)&#xA;&#x9;SELECT 1 HaveDbName&#xA;ELSE&#xA;&#x9;SELECT 0 HaveDbName"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="HaveDbName"
+                SQLTask:DtsVariableName="User::HaveAppDbName" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::BackupAppDbName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container - Backup App Db\Execute SQL Task - Full Backup App Db"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{33413921-DDD3-46D9-A58C-EEB9A51C1B0E}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Full Backup App Db"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStatementSource="DECLARE @name nvarchar(128) = ?;  -- database name&#xA;DECLARE @backupPath nvarchar(256);&#xA;DECLARE @sql nvarchar(3800);&#xA;&#xA;&#xA;EXEC xp_instance_regread&#xA;    N'HKEY_LOCAL_MACHINE',&#xA;    N'Software\Microsoft\MSSQLServer\MSSQLServer',&#xA;    N'BackupDirectory',&#xA;    @backupPath OUTPUT;&#xA;&#xA;SET @backupPath = @backupPath + '\'&#xA;&#x9; &#xA;SET @sql = N'BACKUP DATABASE [' + @name + N'] &#xA;                 TO DISK = N''' + @backupPath + @name + N'_FULL_' + &#xA;                 REPLACE(CONVERT(VARCHAR(20), GETDATE(), 120), ':', '-') + N'.bak'' &#xA;                 WITH INIT, COMPRESSION, CHECKSUM;';&#xA;&#xA;EXEC sp_executesql @sql;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::BackupAppDbName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container - Backup App Db.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{A71855D8-79B7-42C5-8305-A9560EAE0AA6}"
+          DTS:EvalOp="1"
+          DTS:Expression="@[User::HaveAppDbName] == 1"
+          DTS:From="Package\Sequence Container - Backup App Db\Execute SQL Task - Check Existing App Db"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence Container - Backup App Db\Execute SQL Task - Full Backup App Db" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container - Backup Forms Db"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{9C060362-6641-46AF-9BB6-D8592811DD89}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container - Backup Forms Db">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container - Backup Forms Db\Execute SQL Task - Check Existing Forms Db"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{5bf13419-e4ac-491f-bb0f-123e44770f85}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Check Existing Forms Db"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStatementSource="IF EXISTS (SELECT 1 FROM sys.databases WHERE name = ?)&#xA; SELECT 1 HaveDbName&#xA;ELSE&#xA; SELECT 0 HaveDbName"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="HaveDbName"
+                SQLTask:DtsVariableName="User::HaveFormDbName" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::BackupFormDbName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container - Backup Forms Db\Execute SQL Task - Full Backup Forms Db"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{35301ee0-64df-4936-8765-4b64673fc2e5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Full Backup Forms Db"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStatementSource="DECLARE @name nvarchar(128) = ?;  -- database name&#xA;DECLARE @backupPath nvarchar(256);&#xA;DECLARE @sql nvarchar(3800);&#xA;&#xA;&#xA;EXEC xp_instance_regread&#xA;    N'HKEY_LOCAL_MACHINE',&#xA;    N'Software\Microsoft\MSSQLServer\MSSQLServer',&#xA;    N'BackupDirectory',&#xA;    @backupPath OUTPUT;&#xA;&#xA;SET @backupPath = @backupPath + '\'&#xA;  &#xA;SET @sql = N'BACKUP DATABASE [' + @name + N'] &#xA;                 TO DISK = N''' + @backupPath + @name + N'_FULL_' + &#xA;                 REPLACE(CONVERT(VARCHAR(20), GETDATE(), 120), ':', '-') + N'.bak'' &#xA;                 WITH INIT, COMPRESSION, CHECKSUM;';&#xA;&#xA;EXEC sp_executesql @sql;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::BackupFormDbName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container - Backup Forms Db.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{0458F61F-803D-4A2F-879E-1D2DC43108B8}"
+          DTS:EvalOp="1"
+          DTS:Expression="@[User::HaveFormDbName] == 1"
+          DTS:From="Package\Sequence Container - Backup Forms Db\Execute SQL Task - Check Existing Forms Db"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Sequence Container - Backup Forms Db\Execute SQL Task - Full Backup Forms Db" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container - Backup Objects Db"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{ED7AC45A-E473-4ADC-B430-BF88E0850816}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container - Backup Objects Db">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container - Backup Objects Db\Execute SQL Task - Check Existing Objects Db"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ce0da5a2-2346-4952-98a5-edf6d5920038}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Check Existing Objects Db"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="2">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStatementSource="IF EXISTS (SELECT 1 FROM sys.databases WHERE name = ?)&#xA; SELECT 1 HaveDbName&#xA;ELSE&#xA; SELECT 0 HaveDbName"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="HaveDbName"
+                SQLTask:DtsVariableName="User::HaveObjectDbName" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::BackupObjectDbName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container - Backup Objects Db\Execute SQL Task - Full Backup Objects Db"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{5bb19dd9-2fed-4a29-8400-5426790f8a4d}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Full Backup Objects Db"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="2">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStatementSource="DECLARE @name nvarchar(128) = ?;  -- database name&#xA;DECLARE @backupPath nvarchar(256);&#xA;DECLARE @sql nvarchar(3800);&#xA;&#xA;&#xA;EXEC xp_instance_regread&#xA;    N'HKEY_LOCAL_MACHINE',&#xA;    N'Software\Microsoft\MSSQLServer\MSSQLServer',&#xA;    N'BackupDirectory',&#xA;    @backupPath OUTPUT;&#xA;&#xA;SET @backupPath = @backupPath + '\'&#xA;  &#xA;SET @sql = N'BACKUP DATABASE [' + @name + N'] &#xA;                 TO DISK = N''' + @backupPath + @name + N'_FULL_' + &#xA;                 REPLACE(CONVERT(VARCHAR(20), GETDATE(), 120), ':', '-') + N'.bak'' &#xA;                 WITH INIT, COMPRESSION, CHECKSUM;';&#xA;&#xA;EXEC sp_executesql @sql;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::BackupObjectDbName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container - Backup Objects Db.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{BD627E52-BF44-4053-BF51-204A5E948B6B}"
+          DTS:EvalOp="1"
+          DTS:Expression="@[User::HaveObjectDbName] == 1"
+          DTS:From="Package\Sequence Container - Backup Objects Db\Execute SQL Task - Check Existing Objects Db"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Sequence Container - Backup Objects Db\Execute SQL Task - Full Backup Objects Db" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container - Backup ReportServer Db"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{A7872E4C-5397-49FF-AB47-75E4028F68D2}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container - Backup ReportServer Db">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container - Backup ReportServer Db\Execute SQL Task - Check Existing ReporrtServer Db"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{92908847-c494-469e-b01e-8311b2c9ecac}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Check Existing ReporrtServer Db"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="3">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStatementSource="IF EXISTS (SELECT 1 FROM sys.databases WHERE name = ?)&#xA; SELECT 1 HaveDbName&#xA;ELSE&#xA; SELECT 0 HaveDbName"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="HaveDbName"
+                SQLTask:DtsVariableName="User::HaveSSRSDbName" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::BackupSSRSDbName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container - Backup ReportServer Db\Execute SQL Task - Full Backup SSRS Db"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ec92aebb-43bb-4659-8d10-d5df9f08000d}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Full Backup SSRS Db"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="3">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+              SQLTask:SqlStatementSource="DECLARE @name nvarchar(128) = ?;  -- database name&#xA;DECLARE @backupPath nvarchar(256);&#xA;DECLARE @sql nvarchar(3800);&#xA;&#xA;&#xA;EXEC xp_instance_regread&#xA;    N'HKEY_LOCAL_MACHINE',&#xA;    N'Software\Microsoft\MSSQLServer\MSSQLServer',&#xA;    N'BackupDirectory',&#xA;    @backupPath OUTPUT;&#xA;&#xA;SET @backupPath = @backupPath + '\'&#xA;  &#xA;SET @sql = N'BACKUP DATABASE [' + @name + N'] &#xA;                 TO DISK = N''' + @backupPath + @name + N'_FULL_' + &#xA;                 REPLACE(CONVERT(VARCHAR(20), GETDATE(), 120), ':', '-') + N'.bak'' &#xA;                 WITH INIT, COMPRESSION, CHECKSUM;';&#xA;&#xA;EXEC sp_executesql @sql;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::BackupSSRSDbName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container - Backup ReportServer Db.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{FF4C4F36-237F-422B-9EE3-7995B92330B0}"
+          DTS:EvalOp="1"
+          DTS:Expression="@[User::HaveSSRSDbName] == 1"
+          DTS:From="Package\Sequence Container - Backup ReportServer Db\Execute SQL Task - Check Existing ReporrtServer Db"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Sequence Container - Backup ReportServer Db\Execute SQL Task - Full Backup SSRS Db" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{40B48AD9-F0F3-43CD-A0DE-3ED4B18FE9A3}"
+      DTS:From="Package\Execute SQL Task - Create Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Sequence Container - Backup ReportServer Db" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{C8173636-4D53-4FD2-8733-3F47383E0008}"
+      DTS:From="Package\Execute SQL Task - Create Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Sequence Container - Backup App Db" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{d8f50ffc-cb8e-47cc-8b86-ae01071f0775}"
+      DTS:From="Package\Execute SQL Task - Init Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Execute SQL Task - Create Loging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{5BAA1042-4BBB-445A-8BED-135611BCEBCF}"
+      DTS:From="Package\Execute SQL Task - Create Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Sequence Container - Backup Forms Db" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{7F939ECF-088F-4EFB-8B30-33B45683CF70}"
+      DTS:From="Package\Execute SQL Task - Create Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Sequence Container - Backup Objects Db" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{B4391556-9FB1-4E9F-9BBE-BD127272A924}"
+      DTS:EventID="-1901601256"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{F21DE755-F4E6-4F55-ADFB-89BF8F0D7053}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Execute SQL Task - Update Task Result"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{7620136e-395d-48d9-b89a-629cb43c98b5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Update Task Result"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+              SQLTask:SqlStatementSource="UPDATE dbo.MaintenancePackageResult SET ExecutionResult = 1 WHERE PackageName = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:s="clr-namespace:System;assembly=mscorlib">
+        <NodeLayout
+          Size="279.2,41.6"
+          Id="Package\Sequence Container - Backup App Db\Execute SQL Task - Check Existing App Db"
+          TopLeft="4.78571428419383,4.59999992023501" />
+        <NodeLayout
+          Size="264.8,41.6"
+          Id="Package\Sequence Container - Backup App Db\Execute SQL Task - Full Backup App Db"
+          TopLeft="11.9285714422558,91.7764704320572" />
+        <EdgeLayout
+          Id="Package\Sequence Container - Backup App Db.PrecedenceConstraints[Constraint]"
+          TopLeft="144.357142863225,46.199999920235">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.5764705118222"
+              Start="0,0"
+              End="0,38.0764705118222">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.0764705118222" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,11.0382352559111,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="289.6,139.2"
+          Size="289.6,182.4"
+          Id="Package\Sequence Container - Backup App Db"
+          TopLeft="200.542857488016,315.058823857185" />
+        <NodeLayout
+          Size="289.6,41.6"
+          Id="Package\Sequence Container - Backup Forms Db\Execute SQL Task - Check Existing Forms Db"
+          TopLeft="5.5,3.34117638210942" />
+        <NodeLayout
+          Size="276,41.6"
+          Id="Package\Sequence Container - Backup Forms Db\Execute SQL Task - Full Backup Forms Db"
+          TopLeft="13.3571428738695,86.694117485518" />
+        <EdgeLayout
+          Id="Package\Sequence Container - Backup Forms Db.PrecedenceConstraints[Constraint 1]"
+          TopLeft="150.828571436935,44.9411763821095">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.7529411034085"
+              Start="0,0"
+              End="0,34.2529411034085">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.2529411034085" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,9.12647055170427,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="300,133.6"
+          Size="300,176.8"
+          Id="Package\Sequence Container - Backup Forms Db"
+          TopLeft="664.82857276207,71.1352943120323" />
+        <NodeLayout
+          Size="296,41.6"
+          Id="Package\Sequence Container - Backup Objects Db\Execute SQL Task - Check Existing Objects Db"
+          TopLeft="3.28571585945929,2.576470546007" />
+        <NodeLayout
+          Size="282.4,41.6"
+          Id="Package\Sequence Container - Backup Objects Db\Execute SQL Task - Full Backup Objects Db"
+          TopLeft="5.42857300687797,85.2705880315245" />
+        <EdgeLayout
+          Id="Package\Sequence Container - Backup Objects Db.PrecedenceConstraints[Constraint 2]"
+          TopLeft="148.957144433169,44.176470546007">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.0941174855175"
+              Start="0,0"
+              End="0,33.5941174855175">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5941174855175" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,8.79705874275877,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="304,132"
+          Size="304,175.2"
+          Id="Package\Sequence Container - Backup Objects Db"
+          TopLeft="505.542858137278,314.800000307665" />
+        <NodeLayout
+          Size="326.4,41.6"
+          Id="Package\Sequence Container - Backup ReportServer Db\Execute SQL Task - Check Existing ReporrtServer Db"
+          TopLeft="7.31428585417387,3.30588208147191" />
+        <NodeLayout
+          Size="271.2,41.6"
+          Id="Package\Sequence Container - Backup ReportServer Db\Execute SQL Task - Full Backup SSRS Db"
+          TopLeft="38.0285716338423,84.364705539832" />
+        <EdgeLayout
+          Id="Package\Sequence Container - Backup ReportServer Db.PrecedenceConstraints[Constraint 3]"
+          TopLeft="172.071428744008,44.9058820814719">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.4588234583601"
+              Start="0,0"
+              End="0,31.9588234583601">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.9588234583601" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,7.97941172918007,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="338.4,131.2"
+          Size="338.4,174.4"
+          Id="Package\Sequence Container - Backup ReportServer Db"
+          TopLeft="0.542857062269235,81.5058830614429" />
+        <NodeLayout
+          Size="238.4,41.6"
+          Id="Package\Execute SQL Task - Create Loging"
+          TopLeft="0.142857083556436,73.4117646415342" />
+        <NodeLayout
+          Size="224,41.6"
+          Id="Package\Execute SQL Task - Init Loging"
+          TopLeft="2.99999994678149,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="117.171428515169,47.1">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26.3117646415342"
+              Start="0,0"
+              End="0,18.8117646415342">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.8117646415342" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <GroupLayout
+          Text="Loging"
+          ParentId="Package"
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="244,120.8"
+          Size="244,164"
+          Id="52d406f0-a2dd-48f2-8311-9edf145ac837"
+          TopLeft="379.285715093113,24.6529412629384">
+          <GroupLayout.ChildrenIds>
+            <s:String>Package\Execute SQL Task - Create Loging</s:String>
+            <s:String>Package\Execute SQL Task - Init Loging</s:String>
+            <s:String>Package.PrecedenceConstraints[Constraint 2]</s:String>
+          </GroupLayout.ChildrenIds>
+        </GroupLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="379.2,165.552941530721">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-40.2571429377307,0"
+              Start="0,0"
+              End="-32.7571429377307,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-32.7571429377307,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="460,183.2">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-114.657142511984,131.858823857185"
+              Start="0,0"
+              End="-114.657142511984,124.358823857185">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.2709648383026" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,49.2709648383026"
+                    Point2="0,53.2709648383026"
+                    Point3="-4,53.2709648383026" />
+                  <mssgle:LineSegment
+                    End="-110.657142511984,53.2709648383026" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-110.657142511984,53.2709648383026"
+                    Point2="-114.657142511984,53.2709648383026"
+                    Point3="-114.657142511984,57.2709648383026" />
+                  <mssgle:LineSegment
+                    End="-114.657142511984,124.358823857185" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="617.6,160.967647156016">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47.22857276207,0"
+              Start="0,0"
+              End="39.72857276207,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="39.72857276207,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="536.8,183.2">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="120.742858137278,131.600000307665"
+              Start="0,0"
+              End="120.742858137278,124.100000307665">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.1664001242967" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,49.1664001242967"
+                    Point2="0,53.1664001242967"
+                    Point3="4,53.1664001242967" />
+                  <mssgle:LineSegment
+                    End="116.742858137278,53.1664001242967" />
+                  <mssgle:CubicBezierSegment
+                    Point1="116.742858137278,53.1664001242967"
+                    Point2="120.742858137278,53.1664001242967"
+                    Point3="120.742858137278,57.1664001242967" />
+                  <mssgle:LineSegment
+                    End="120.742858137278,124.100000307665" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="264,41.6"
+          Id="Package.EventHandlers[OnError]\Execute SQL Task - Update Task Result"
+          TopLeft="18.6153843379939,14.5384613218216" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

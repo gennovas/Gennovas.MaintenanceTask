@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/19/2025 10:16:13 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-06GRA2V"
+  DTS:CreatorName="DESKTOP-06GRA2V\Sarit Tunthong"
+  DTS:DTSID="{D44B8601-0586-4C48-A08F-DD4B57BCF32C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="MT07 - CheckStorage"
+  DTS:PackageType="5"
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{86F374FD-A644-410A-8730-5D73B66048CC}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6E61F912-F5FC-41F8-89E7-082A1286EAF5}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;USE &quot; + @[$Project::BackupAppDbName] +  &quot;;&quot; +&#xA;&#xA;&quot;IF OBJECT_ID('dbo.MaintenanceFreeSpace') IS NULL&#xA;CREATE TABLE dbo.MaintenanceFreeSpace (&#xA;&#x9;DriveLetter nvarchar(10),&#xA;&#x9;FreeGb decimal(19, 2)&#xA;) &quot; +&#xA;&#xA;&quot;TRUNCATE TABLE dbo.MaintenanceFreeSpace&#xA; &#xA;INSERT INTO dbo.MaintenanceFreeSpace&#xA;EXEC xp_fixeddrives;&quot; + &#xA;&quot;UPDATE dbo.MaintenanceFreeSpace SET FreeGB = FreeGb / 1024.00&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCmd">
+      <DTS:VariableValue
+        DTS:DataType="8">USE TTC_LIVE_App;IF OBJECT_ID('dbo.MaintenanceFreeSpace') IS NULL
+CREATE TABLE dbo.MaintenanceFreeSpace (
+	DriveLetter nvarchar(10),
+	FreeGb decimal(19, 2)
+) TRUNCATE TABLE dbo.MaintenanceFreeSpace
+ 
+INSERT INTO dbo.MaintenanceFreeSpace
+EXEC xp_fixeddrives;UPDATE dbo.MaintenanceFreeSpace SET FreeGB = FreeGb / 1024.00</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Check Free Storage"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0ED58754-4DBF-4ABF-A646-F72DAD6BD7D5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Check Free Storage"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQLCmd" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Create Loging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{40766ca2-7a40-4ea5-8316-b87b8ffb7fd9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Create Loging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+          SQLTask:SqlStatementSource="INSERT INTO dbo.MaintenancePackageResult (PackageName) VALUES (?);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Init Loging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{cce5fad3-dc88-4f09-8c5f-f1f7057ec51d}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Init Loging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+          SQLTask:SqlStatementSource="IF OBJECT_ID('dbo.MaintenancePackageResult') IS NULL&#xA;CREATE TABLE dbo.MaintenancePackageResult&#xA;(&#xA;    PackageName NVARCHAR(255) NOT NULL,&#xA;    ExecutionResult INT NOT NULL DEFAULT 0&#xA;);&#xA;&#xA;DELETE dbo.MaintenancePackageResult WHERE PackageName = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{DEBEC224-B303-4F50-826E-78E0C83F4BE0}"
+      DTS:From="Package\Execute SQL Task - Init Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Execute SQL Task - Create Loging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{3143D00A-C310-4047-A4B9-98CAB67A7D28}"
+      DTS:From="Package\Execute SQL Task - Create Loging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Execute SQL Task - Check Free Storage" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{12540AD7-6168-4C24-A2B4-C30E0D3F33F7}"
+      DTS:EventID="0"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{54A9B84C-EA5D-4D2F-8304-4F80E2BCF518}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\Execute SQL Task - Update Task Result"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{54aa7cd1-7b36-4045-91b7-5c2bd5bb4841}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task - Update Task Result"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+              SQLTask:SqlStatementSource="UPDATE dbo.MaintenancePackageResult SET ExecutionResult = 1 WHERE PackageName = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="264.8,41.6"
+          Id="Package\Execute SQL Task - Check Free Storage"
+          TopLeft="127.142857413511,149.117646928116" />
+        <NodeLayout
+          Size="238.4,41.6"
+          Id="Package\Execute SQL Task - Create Loging"
+          TopLeft="97.1428573496488,82.4411763935046" />
+        <NodeLayout
+          Size="224,41.6"
+          Id="Package\Execute SQL Task - Init Loging"
+          TopLeft="75.7142858754616,16.8235293970182" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="187.714285875462,58.4235293970182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="28.6285714741873,24.0176469964864"
+              Start="0,0"
+              End="28.6285714741873,16.5176469964864">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.0088234982432" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.0088234982432"
+                    Point2="0,12.0088234982432"
+                    Point3="4,12.0088234982432" />
+                  <mssgle:LineSegment
+                    End="24.6285714741873,12.0088234982432" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24.6285714741873,12.0088234982432"
+                    Point2="28.6285714741873,12.0088234982432"
+                    Point3="28.6285714741873,16.0088234982432" />
+                  <mssgle:LineSegment
+                    End="28.6285714741873,16.5176469964864" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="216.342857349649,124.041176393505">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="43.200000063862,25.0764705346115"
+              Start="0,0"
+              End="43.200000063862,17.5764705346115">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.53823526730575" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.53823526730575"
+                    Point2="0,12.5382352673058"
+                    Point3="4,12.5382352673058" />
+                  <mssgle:LineSegment
+                    End="39.200000063862,12.5382352673058" />
+                  <mssgle:CubicBezierSegment
+                    Point1="39.200000063862,12.5382352673058"
+                    Point2="43.200000063862,12.5382352673058"
+                    Point3="43.200000063862,16.5382352673058" />
+                  <mssgle:LineSegment
+                    End="43.200000063862,17.5764705346115" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="264,41.6"
+          Id="Package.EventHandlers[OnError]\Execute SQL Task - Update Task Result"
+          TopLeft="6.9999998956919,12.1538459727397" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

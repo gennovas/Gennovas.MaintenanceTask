@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/19/2025 10:12:46 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-06GRA2V"
+  DTS:CreatorName="DESKTOP-06GRA2V\Sarit Tunthong"
+  DTS:DTSID="{EA2C8314-400B-46B9-ADE9-C839DC409944}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="MT03 - IndexMaintenance"
+  DTS:PackageType="5"
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{6A399B7A-5D2B-464C-B03E-E40CC5962BF2}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1C3F02C4-F7DE-47E4-AD53-3B54363FE61D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;USE &quot;+ @[$Project::BackupAppDbName] +&quot;;&#xA;DECLARE @TableName NVARCHAR(255), &#xA;        @SchemaName NVARCHAR(255),&#xA;        @IndexName NVARCHAR(255), &#xA;        @sql NVARCHAR(MAX), &#xA;        @FragmentPct FLOAT;&#xA;&#xA;DECLARE cur CURSOR FOR&#xA;SELECT  &#xA;    OBJECT_NAME(ips.object_id) AS TableName,&#xA;    OBJECT_SCHEMA_NAME(ips.object_id) AS SchemaName,&#xA;    i.name AS IndexName,&#xA;    ips.avg_fragmentation_in_percent&#xA;FROM sys.dm_db_index_physical_stats(DB_ID('&quot;+ @[$Project::BackupAppDbName] +&quot;'), NULL, NULL, NULL, 'SAMPLED') AS ips&#xA;INNER JOIN sys.indexes AS i&#xA;    ON ips.object_id = i.object_id AND ips.index_id = i.index_id&#xA;WHERE i.index_id &gt; 0&#xA;  AND ips.page_count &gt; 100&#xA;  AND i.name NOT LIKE '%RowPointer%'&#xA;  AND ips.avg_fragmentation_in_percent &gt; 4&#xA;ORDER BY ips.avg_fragmentation_in_percent DESC;&#xA;&#xA;OPEN cur;&#xA;FETCH NEXT FROM cur INTO @TableName, @SchemaName, @IndexName, @FragmentPct;&#xA;&#xA;WHILE @@FETCH_STATUS = 0&#xA;BEGIN&#xA;    IF @FragmentPct BETWEEN 5 AND 30&#xA;        SET @sql = 'ALTER INDEX ['+@IndexName+'] ON ['+@SchemaName+'].['+@TableName+'] REORGANIZE;';&#xA;    ELSE IF @FragmentPct &gt; 30&#xA;        SET @sql = 'ALTER INDEX ['+@IndexName+'] ON ['+@SchemaName+'].['+@TableName+'] REBUILD;';&#xA;    ELSE&#xA;        SET @sql = NULL;&#xA;&#xA;    IF @sql IS NOT NULL&#xA;    BEGIN&#xA;        BEGIN TRY&#xA;            EXEC(@sql);&#xA;        END TRY&#xA;        BEGIN CATCH&#xA;            PRINT 'Error on ' + @SchemaName + '.' + @TableName + ' index ' + @IndexName;&#xA;        END CATCH&#xA;    END&#xA;&#xA;    FETCH NEXT FROM cur INTO @TableName, @SchemaName, @IndexName, @FragmentPct;&#xA;END&#xA;&#xA;CLOSE cur;&#xA;DEALLOCATE cur;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCmdMaintIndex">
+      <DTS:VariableValue
+        DTS:DataType="8">USE TTC_LIVE_App;
+DECLARE @TableName NVARCHAR(255), 
+        @SchemaName NVARCHAR(255),
+        @IndexName NVARCHAR(255), 
+        @sql NVARCHAR(MAX), 
+        @FragmentPct FLOAT;
+
+DECLARE cur CURSOR FOR
+SELECT  
+    OBJECT_NAME(ips.object_id) AS TableName,
+    OBJECT_SCHEMA_NAME(ips.object_id) AS SchemaName,
+    i.name AS IndexName,
+    ips.avg_fragmentation_in_percent
+FROM sys.dm_db_index_physical_stats(DB_ID('TTC_LIVE_App'), NULL, NULL, NULL, 'SAMPLED') AS ips
+INNER JOIN sys.indexes AS i
+    ON ips.object_id = i.object_id AND ips.index_id = i.index_id
+WHERE i.index_id &gt; 0
+  AND ips.page_count &gt; 100
+  AND i.name NOT LIKE '%RowPointer%'
+  AND ips.avg_fragmentation_in_percent &gt; 4
+ORDER BY ips.avg_fragmentation_in_percent DESC;
+
+OPEN cur;
+FETCH NEXT FROM cur INTO @TableName, @SchemaName, @IndexName, @FragmentPct;
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    IF @FragmentPct BETWEEN 5 AND 30
+        SET @sql = 'ALTER INDEX ['+@IndexName+'] ON ['+@SchemaName+'].['+@TableName+'] REORGANIZE;';
+    ELSE IF @FragmentPct &gt; 30
+        SET @sql = 'ALTER INDEX ['+@IndexName+'] ON ['+@SchemaName+'].['+@TableName+'] REBUILD;';
+    ELSE
+        SET @sql = NULL;
+
+    IF @sql IS NOT NULL
+    BEGIN
+        BEGIN TRY
+            EXEC(@sql);
+        END TRY
+        BEGIN CATCH
+            PRINT 'Error on ' + @SchemaName + '.' + @TableName + ' index ' + @IndexName;
+        END CATCH
+    END
+
+    FETCH NEXT FROM cur INTO @TableName, @SchemaName, @IndexName, @FragmentPct;
+END
+
+CLOSE cur;
+DEALLOCATE cur;</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - Rebuild Reorganize Index"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FDB1BE87-F0B1-4E98-BA8D-86B8C0DF29ED}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - Rebuild Reorganize Index"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9426DEBF-3F1F-4FD7-B0A9-438C2B58C1D2}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SQLCmdMaintIndex" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="293.6,41.6"
+          Id="Package\Execute SQL Task - Rebuild Reorganize Index"
+          TopLeft="150.000000319311,107.823529317253" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

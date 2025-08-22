@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="MSSQLOLEDBLogingConnection"
+  DTS:DTSID="{2E09C410-0A7D-443D-B4AC-A962A512B225}"
+  DTS:CreationName="OLEDB">
+  <DTS:PropertyExpression
+    DTS:Name="ConnectionString">"Data Source="+ @[$Project::DataSource] +";Initial Catalog="+ @[$Project::BackupAppDbName] +";Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name="+ @[$Project::ApplicationName] +";Auto Translate=False;"</DTS:PropertyExpression>
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=TTC-SQLDB;Initial Catalog=TTC_LIVE_App;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=TTC - Maintenance Task;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
