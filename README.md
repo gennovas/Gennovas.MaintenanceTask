@@ -101,3 +101,39 @@ EXEC catalog.create_environment_reference
     @project_name     = N'Gennovas.MaintenanceTask',
     @reference_type   = N'R',  -- R = Required, A = Optional
     @folder_name      = @FolderName;
+
+---
+## 5. Mapping environment variable to project variable
+---
+
+## 6. Create SQL Agent Job
+
+Use SSMS or T-SQL to create a scheduled job for daily execution of maintenance packages:
+
+```sql
+USE msdb;
+GO
+
+-- Create Job
+EXEC msdb.dbo.sp_add_job
+    @job_name=N'MaintenanceTasks - Every day',
+    @enabled=1,
+    @description=N'Daily maintenance tasks',
+    @owner_login_name=N'TTC-SQLDB\Administrator';
+
+-- Add Job Steps (example: MT01, MT02, etc.)
+EXEC msdb.dbo.sp_add_jobstep
+    @job_name=N'MaintenanceTasks - Every day',
+    @step_name=N'Call MT01 - ShrinkDatabase',
+    @subsystem=N'SSIS',
+    @command=N'/ISSERVER "\SSISDB\Maintenance\Gennovas.MaintenanceTask\MT01 - ShrinkDatabase.dtsx" /SERVER "TTC-SQLDB" /ENVREFERENCE 1 /Par "$ServerOption::LOGGING_LEVEL(Int16)";1 /Par "$ServerOption::SYNCHRONIZED(Boolean)";True /CALLERINFO SQLAGENT /REPORTING E';
+
+-- Add additional steps as needed (MT02, MT06, MT07, MT08)
+
+-- Schedule Job
+EXEC msdb.dbo.sp_add_jobschedule
+    @job_name=N'MaintenanceTasks - Every day',
+    @name=N'Maintenance - Daily Tasks',
+    @freq_type=4,
+    @freq_interval=1,
+    @active_start_time=100;
